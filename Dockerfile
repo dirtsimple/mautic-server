@@ -3,6 +3,7 @@ RUN EXTRA_APKS=imap-dev EXTRA_EXTS=imap install-extras
 
 ENV PHP_CONTROLLER true
 ENV USE_CRON true
+ENV REMOVE_FILES false
 ENV EXCLUDE_PHP "/app /bin /build /media /plugins /themes /translations /vendor"
 ENV RUN_SCRIPTS "/usr/bin/fix-mautic-perms"
 ENV NGINX_WRITABLE "app/cache app/logs /mautic-data"
