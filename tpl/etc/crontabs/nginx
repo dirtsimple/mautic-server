@@ -1,0 +1,1 @@
+{{.Env.MAUTIC_JOB_TIMES}} * * * * supervisorctl start run-mautic-jobs

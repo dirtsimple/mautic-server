@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+for job in $MAUTIC_JOBS; do
+    as-nginx php "$CODE_BASE/app/console" mautic:$job $MAUTIC_JOB_OPTS
+done

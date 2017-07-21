@@ -1,0 +1,13 @@
+#!/bin/bash
+
+umask 0002
+as-developer true   # ensure dev exists
+
+for sub in cache logs config; do
+    mkdir -p "$MAUTIC_DATA/$sub"
+    chown developer:nginx "$MAUTIC_DATA/$sub"
+    chmod g+ws "$MAUTIC_DATA/$sub"
+done
+
+as-developer mkdir -p "$MAUTIC_DATA/cache/prod"
+chmod g+ws "$MAUTIC_DATA/cache/prod"
