@@ -1,11 +1,11 @@
 FROM dirtsimple/php-server:latest
-RUN EXTRA_APKS=imap-dev EXTRA_EXTS=imap install-extras
+RUN EXTRA_APKS=imap-dev EXTRA_EXTS="imap bcmath" install-extras
 
 ENV CODE_BASE /code
 
 # Install/build Mautic
 RUN mkdir -p $CODE_BASE/.git/hooks \
-    && wget -O - https://github.com/mautic/mautic/archive/2.10.0.tar.gz | tar zx -C $CODE_BASE --strip-components=1 \
+    && wget -O - https://github.com/mautic/mautic/archive/2.12.0.tar.gz | tar zx -C $CODE_BASE --strip-components=1 \
     && cd $CODE_BASE && composer install --no-dev
 
 ENV PHP_CONTROLLER true
