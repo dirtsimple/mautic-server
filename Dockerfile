@@ -5,7 +5,7 @@ ENV CODE_BASE /code
 
 # Install/build Mautic
 RUN mkdir -p $CODE_BASE/.git/hooks \
-    && wget -O - https://github.com/mautic/mautic/archive/2.12.0.tar.gz | tar zx -C $CODE_BASE --strip-components=1 \
+    && wget -O - https://github.com/mautic/mautic/archive/2.14.2.tar.gz | tar zx -C $CODE_BASE --strip-components=1 \
     && cd $CODE_BASE && composer install --no-dev
 
 ENV PHP_CONTROLLER true
