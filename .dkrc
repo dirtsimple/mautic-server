@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# ---
+# Add your own commands, functions, and variables here.  Define defaults first,
+# then `dk use:` the desired devkit modules, and then define any overrides to
+# the devkit defaults.
+# ---
+
+dk use: cram              # run tests using the "cram" functional test tool
+dk use: modd-watch        # watch files and re-run tests or other commands
+dk use: shell-console     # make the "console" command enter a subshell
+
+[[ -d "$BASHER_PREFIX"/dirtsimple/mantle-lib ]] ||
+	# You can change this to use a specific non-master branch, if needed
+	# github dirtsimple/mantle-lib master
+	{
+		mkdir -p "$BASHER_PREFIX/dirtsimple"
+		ln -s /repos/mtools "$BASHER_PREFIX"/dirtsimple/mantle-lib;
+	}
+
+dk use: mantle
+
+# Skip WordPress-specific commands
+off boot doco-delegate imposer
+off boot doco-delegate wp
+
+# Add Mautic-specific commands
+on boot doco-delegate console
