@@ -18,5 +18,5 @@ In addition to the environment variables supported by dirtsimple/php-server, it 
   * `reports:scheduler`
 * `MAUTIC_JOB_OPTS` -- options to pass when running the above jobs; defaults to `--no-interaction`
 * `MAUTIC_JOB_TIMES` -- minutes at which jobs should be run; defaults to `*/5`, i.e., every five minutes
-* `MAUTIC_DATA` -- a directory under which all the instance's configuration, data, media, logs, and cache will be stored; defaults to the volume `/data`.  (Note: If you change this, you will also need to update the `NGINX_WRITABLE` variable to include the new value instead of `/data`; see the `Dockerfile` for the other values that should be included in `NGINX_WRITABLE`.)
+* `MAUTIC_DATA` -- a directory under which all the instance's configuration, data, translations, media, logs, and cache will be stored; defaults to the volume `/data`.  (Note: If you change this, you will also need to update the `NGINX_WRITABLE` variable to include the new value instead of `/data`; see the `Dockerfile` for the other values that should be included in `NGINX_WRITABLE`.)
 

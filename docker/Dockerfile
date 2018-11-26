@@ -6,7 +6,9 @@ ENV CODE_BASE /code
 # Install/build Mautic
 RUN mkdir -p $CODE_BASE/.git/hooks \
     && wget -O - https://github.com/mautic/mautic/archive/2.14.2.tar.gz | tar zx -C $CODE_BASE --strip-components=1 \
-    && cd $CODE_BASE && composer install --no-dev
+    && cd $CODE_BASE && composer install --no-dev \
+    && rm -rf $CODE_BASE/translations \
+    && chmod -R g-w $CODE_BASE
 
 ENV PHP_CONTROLLER true
 ENV USE_CRON true
@@ -18,7 +20,8 @@ ENV MAUTIC_JOB_OPTS "--no-interaction"
 ENV MAUTIC_JOB_TIMES "*/5"
 
 ENV MAUTIC_DATA /data
-ENV NGINX_WRITABLE "app/cache app/logs $MAUTIC_DATA"
+ENV NGINX_WRITABLE "$MAUTIC_DATA"
+ENV NGINX_READABLE "$MAUTIC_DATA"
 
 VOLUME $MAUTIC_DATA
 WORKDIR $CODE_BASE
