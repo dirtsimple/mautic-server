@@ -15,3 +15,8 @@ for sub in media/uploads translations; do
 	[[ -L "$MAUTIC_DATA/$sub" ]] || rm -rf "$CODE_BASE/$sub"
 	ln -s "$MAUTIC_DATA/$sub" "$CODE_BASE/$sub"
 done
+
+# Force regenerate cached configuration to ensure it's consistent with the
+# current environment, as set by parameters_local.php
+rm "$MAUTIC_DATA/cache/prod/appProdProjectContainer".*
+as-developer php app/console cache:warmup --no-optional-warmers
