@@ -10,13 +10,17 @@ for sub in cache cache/prod logs config media/uploads media/files translations; 
     chmod g+ws "$MAUTIC_DATA/$sub"
 done
 
+# Create default config
+[[ -f "$MAUTIC_DATA"/config/local.php ]] || as-nginx \
+	cp "$CODE_BASE"/app/config/parameters_local.php "$MAUTIC_DATA"/config/local.php
+
 # Route image uploads and translations to data volume
-for sub in media/uploads translations; do
+for sub in media/uploads translations app/cache app/logs; do
 	[[ -L "$MAUTIC_DATA/$sub" ]] || rm -rf "$CODE_BASE/$sub"
-	ln -s "$MAUTIC_DATA/$sub" "$CODE_BASE/$sub"
+	ln -sfn "$MAUTIC_DATA/${sub#app/}" "$CODE_BASE/$sub"
 done
 
 # Force regenerate cached configuration to ensure it's consistent with the
 # current environment, as set by parameters_local.php
-rm "$MAUTIC_DATA/cache/prod/appProdProjectContainer".*
+rm "$MAUTIC_DATA/cache/prod/appProdProjectContainer".* 2>/dev/null
 as-developer php app/console cache:warmup --no-optional-warmers

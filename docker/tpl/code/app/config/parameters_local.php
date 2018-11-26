@@ -9,25 +9,29 @@ $parameters = array_filter(
 		'db_user'     => 'DB_USER',
 		'db_password' => 'DB_PASSWORD',
 
+		'db_table_prefix'    => 'DB_PREFIX',
+
 		'mailer_return_path' => 'MAUTIC_MAIL_RETURN',
 		'mailer_from_name'   => 'MAUTIC_FROM_NAME',
 		'mailer_from_email'  => 'MAUTIC_FROM_EMAIL',
+
+		# Transport can be one of gmail, mail (PHP Mail), smtp, sendmail, or
+		# mautic.transport.{amazon,mandrill,mailjet,postmark,sendgrid,sendgrid_api,elasticmail,sparkpost,momentum}
 		'mailer_transport'   => 'MAUTIC_MAIL_TRANSPORT',
+		'mailer_api_key'     => 'MAUTIC_MAIL_KEY',        # used for sparkpost, mandrill, sendgrid API, momentum
+
 		'mailer_host'        => 'MAUTIC_MAIL_HOST',
 		'mailer_port'        => 'MAUTIC_MAIL_PORT',
 		'mailer_user'        => 'MAUTIC_MAIL_USER',
 		'mailer_password'    => 'MAUTIC_MAIL_PASSWORD',
-		'mailer_encryption'  => 'MAUTIC_MAIL_ENCRYPTION',
-		'mailer_auth_mode'   => 'MAUTIC_MAIL_AUTH',
+
+		'mailer_encryption'  => 'MAUTIC_MAIL_ENCRYPTION', # tls | ssl
+		'mailer_auth_mode'   => 'MAUTIC_MAIL_AUTH',       # plain | login | cram-md5
+		'mailer_spool_type'  => 'MAUTIC_MAIL_SPOOL',      # memory=immediate, file=queue
 
 		'secret_key' => 'MAUTIC_SECRET_KEY',
 		'site_url'   => 'MAUTIC_BASE_URL',
 		'locale'     => 'MAUTIC_LOCALE',
-
-		'date_format_full'     => 'DATE_FORMAT_FULL',
-		'date_format_short'    => 'DATE_FORMAT_SHORT',
-		'date_format_dateonly' => 'DATE_FORMAT_DATE',
-		'date_format_timeonly' => 'DATE_FORMAT_TIME',
 
 		'rabbitmq_host'     => 'RMQ_HOST',
 		'rabbitmq_port'     => 'RMQ_PORT',
@@ -50,3 +54,12 @@ $parameters = array_filter(
     'cache_path'        => $_ENV['MAUTIC_DATA'] . '/cache',
     'tmp_path'          => $_ENV['MAUTIC_DATA'] . '/cache',
 ];
+
+if ( basename(__FILE__) === 'local.php' ) {
+	# If this file is being used to bootstrap installation, unset the mail from name
+	# so that Mautic doesn't think the installation is finished before it's started.
+	unset($paramaters['mailer_from_name']);
+
+	# Default to overwriting tables for a new install
+	$parameters['db_backup_tables'] = 0;
+}
