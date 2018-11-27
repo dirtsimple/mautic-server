@@ -24,5 +24,9 @@ done
 # current environment, as set by parameters_local.php
 rm "$MAUTIC_DATA/cache/prod/appProdProjectContainer".* 2>/dev/null
 
-# Create a DB if needed, and regenerate the config cache as a side-effect
-as-developer php app/console doctrine:database:create --if-not-exists
+if [[ "$DB_USER" && "$DB_NAME" ]]; then
+	# Create a DB if needed, and regenerate the config cache as a side-effect
+	as-developer php app/console doctrine:database:create --if-not-exists || true
+else
+	as-developer php app/console cache:warmup --no-optional-warmers
+fi
