@@ -7,7 +7,8 @@ as-developer true   # ensure dev exists
 for sub in cache cache/prod logs config media/uploads media/files translations; do
     mkdir -p "$MAUTIC_DATA/$sub"
     chown developer:nginx "$MAUTIC_DATA/$sub"
-    chmod g+ws "$MAUTIC_DATA/$sub"
+    chmod g+s "$MAUTIC_DATA/$sub"
+    chmod -R g+w "$MAUTIC_DATA/$sub"
 done
 
 # Create default config
