@@ -1,4 +1,4 @@
-FROM dirtsimple/php-server:1.3.4
+FROM dirtsimple/php-server:1.3.5
 RUN EXTRA_APKS=imap-dev EXTRA_EXTS="imap bcmath" install-extras
 
 ENV CODE_BASE /code
