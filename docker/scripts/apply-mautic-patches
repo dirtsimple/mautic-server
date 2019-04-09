@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -eu
+shopt -s nullglob
+
+mkdir -p /patch-sets /applied-patches
+cd /patch-sets
+
+patches=(*/*.patch)
+cd /code
+
+for patch in ${patches[@]+"${patches[@]}"}; do
+	current="/patch-sets/$patch"
+	applied="/applied-patches/$patch"
+	if [[ ! -f "$applied" ]] || ! diff "$applied" "$current" &>/dev/null; then
+		if git apply --check "$current"; then
+			echo "Applying $patch"
+			git apply "$current"
+			mkdir -p "$(dirname "$applied")"
+			cp "$current" "$applied"
+		else
+			echo "Skipping $patch due to errors"
+		fi
+	fi
+done

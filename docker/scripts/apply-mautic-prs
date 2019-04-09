@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -eu
+
+mkdir -p /patch-sets/01-Mautic-PRs
+cd /patch-sets/01-Mautic-PRs
+
+for PR in "$@" ${MAUTIC_PRS-}; do
+	wget -O $PR.patch https://patch-diff.githubusercontent.com/raw/mautic/mautic/pull/$PR.patch
+done
+
+exec apply-mautic-patches

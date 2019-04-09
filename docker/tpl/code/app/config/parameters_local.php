@@ -1,4 +1,8 @@
 <?php
+
+# Ensure files created by web server are group-writable by developer user
+umask(0002);
+
 $parameters = array_filter(
 	array_map( 'getenv', [
 
