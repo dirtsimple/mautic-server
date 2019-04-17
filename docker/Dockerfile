@@ -33,5 +33,5 @@ COPY tpl/ /tpl/
 COPY scripts/ /usr/bin/
 
 ENV MAUTIC_PRS ""
-ARG BUILD_PRS="7046 7399"
+ARG BUILD_PRS="7046 7399 7409"
 RUN apply-mautic-prs $BUILD_PRS

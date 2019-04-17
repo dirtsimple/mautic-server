@@ -25,7 +25,7 @@ In addition to the above, you can also configure various Mautic settings (e.g. d
 
 ### Patches and Pull Requests
 
-Because Mautic sometimes has issues that you may need PRs or custom patches to address, this image supports applying patches automatically.  You can list a series of Github PR numbers as a build argument (e.g. `docker build  --build-args BUILD_PRS="7046 7399" .`), or as an environment variable on a specific container (in the `MAUTIC_PRS` environment variable.)
+Because Mautic sometimes has issues that you may need PRs or custom patches to address, this image supports applying patches automatically.  You can list a series of Github PR numbers as a build argument (e.g. `docker build --build-args BUILD_PRS="7046 7399 7409"`), or as an environment variable on a specific container (in the `MAUTIC_PRS` environment variable.)
 
 Of course, not all patches you may need to apply are available on Github, so this image automatically applies any patches found in a subdirectory of the container's `/patch-sets/` directory.  For example, if you mount a directory as `/patch-sets/my-patches`, then any `*.patch` files in that directory will also be applied.
 
