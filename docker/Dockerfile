@@ -13,7 +13,7 @@ RUN mkdir -p $CODE_BASE/.git/hooks \
 ENV PHP_CONTROLLER true
 ENV USE_CRON true
 ENV EXCLUDE_PHP "/app /bin /build /media /plugins /themes /translations /vendor"
-ENV RUN_SCRIPTS "/usr/bin/fix-mautic-perms /usr/bin/apply-mautic-patches"
+ENV RUN_SCRIPTS "/usr/bin/apply-mautic-patches /usr/bin/fix-mautic-perms"
 
 ENV MAUTIC_JOBS "segments:update campaigns:rebuild campaigns:trigger messages:send emails:send email:fetch social:monitoring webhooks:process broadcasts:send reports:scheduler"
 ENV MAUTIC_JOB_OPTS "--no-interaction"
