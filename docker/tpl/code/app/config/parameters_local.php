@@ -6,7 +6,7 @@ umask(0002);
 $parameters = array_filter(
 	array_map( 'getenv', [
 
-		'db_driver'   => 'DB_PDO_DRIVER',
+		'db_driver'   => 'DB_PDO_DRIVER',   # pdo_mysql or mysqli
 		'db_host'     => 'DB_HOST',
 		'db_port'     => 'DB_PORT',
 		'db_name'     => 'DB_NAME',
