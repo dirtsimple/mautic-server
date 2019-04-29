@@ -30,3 +30,51 @@ Because Mautic sometimes has issues that you may need PRs or custom patches to a
 Of course, not all patches you may need to apply are available on Github, so this image automatically applies any patches found in a subdirectory of the container's `/patch-sets/` directory.  For example, if you mount a directory as `/patch-sets/my-patches`, then any `*.patch` files in that directory will also be applied.
 
 Applied patches are copied to `/applied-patches`, and are not reapplied unless the container is recreated or the patch files' contents change.  (Note that changing a patch may result in the patch not being able to be applied, unless you first un-apply the old patch or recreate the container.)
+
+### Usage example
+
+Here is an example of docker-compose.yml which runs Mautic with traefik against external database:
+
+```
+version: '3.3'
+
+services:
+    mautic:
+        image: dirtsimple/mautic-server:2.15.1
+        environment:
+            DB_PDO_DRIVER: 'pdo_mysql'
+            DB_HOST: 'db'
+            DB_PORT: '3306'
+            DB_NAME: mautic
+            DB_USER: mautic
+            DB_PASSWORD: 'changeme'
+            MAUTIC_FROM_NAME: 'changeme'
+            MAUTIC_FROM_EMAIL: 'changeme'
+            MAUTIC_MAIL_TRANSPORT: 'smtp'
+            MAUTIC_MAIL_HOST: 'changeme'
+            MAUTIC_MAIL_PORT: '587'
+            MAUTIC_MAIL_USER: 'changeme'
+            MAUTIC_MAIL_PASSWORD: 'changeme'
+            MAUTIC_MAIL_ENCRYPTION: 'tls' #tls | ssl
+            MAUTIC_MAIL_AUTH: 'plain' #plain | login | cram-md5
+            MAUTIC_MAIL_SPOOL: 'memory' #memory=immediate, file=queue
+            MAUTIC_SECRET_KEY: 'changeme'
+            MAUTIC_BASE_URL: 'https://changeme'
+            MAUTIC_LOCALE: 'en_US'
+        volumes:
+            - /opt/data/mautic:/data
+        extra_hosts:
+            - 'db:172.17.0.1'
+        networks:
+            - webproxy
+        labels:
+            - "traefik.enable=true"
+            - "traefik.backend=mautic"
+            - "traefik.frontend.rule=Host:changeme"
+            - "traefik.port=80"
+            - "traefik.docker.network=webproxy"
+
+networks:
+    webproxy:
+        external: true
+```
