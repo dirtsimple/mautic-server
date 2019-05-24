@@ -12,6 +12,8 @@ for patch in ${patches[@]+"${patches[@]}"}; do
 	current="/patch-sets/$patch"
 	applied="/applied-patches/$patch"
 	if [[ ! -f "$applied" ]] || ! diff "$applied" "$current" &>/dev/null; then
+		# Unpatch old version if present
+		[[ ! -f "$applied" ]] || git apply -R "$applied"
 		if git apply --check "$current"; then
 			echo "Applying $patch"
 			git apply "$current"
@@ -19,6 +21,8 @@ for patch in ${patches[@]+"${patches[@]}"}; do
 			cp "$current" "$applied"
 		else
 			echo "Skipping $patch due to errors"
+			# Re-patch old version if present
+			[[ ! -f "$applied" ]] || git apply -R "$applied"
 		fi
 	fi
 done

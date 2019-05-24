@@ -5,7 +5,8 @@ mkdir -p /patch-sets/01-Mautic-PRs
 cd /patch-sets/01-Mautic-PRs
 
 for PR in "$@" ${MAUTIC_PRS-}; do
-	wget -O $PR.patch https://patch-diff.githubusercontent.com/raw/mautic/mautic/pull/$PR.patch
+	[[ -f "$PR.patch" ]] ||
+		wget -O "$PR.patch" https://patch-diff.githubusercontent.com/raw/mautic/mautic/pull/$PR.diff
 done
 
 exec apply-mautic-patches
