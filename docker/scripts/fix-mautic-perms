@@ -4,7 +4,7 @@ umask 0002
 as-developer true   # ensure dev exists
 
 # Ensure data subdirs exist
-for sub in cache cache/prod logs config media/uploads media/files translations; do
+for sub in cache cache/prod logs config media/uploads media/files tmp translations; do
     mkdir -p "$MAUTIC_DATA/$sub"
     chown developer:nginx "$MAUTIC_DATA/$sub"
     chmod g+s "$MAUTIC_DATA/$sub"

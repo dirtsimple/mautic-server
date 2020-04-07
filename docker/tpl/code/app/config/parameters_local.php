@@ -56,7 +56,7 @@ $parameters = array_filter(
     'upload_dir'        => $_ENV['MAUTIC_DATA'] . '/media/files',
     'mailer_spool_path' => $_ENV['MAUTIC_DATA'] . '/spool',
     'cache_path'        => $_ENV['MAUTIC_DATA'] . '/cache',
-    'tmp_path'          => $_ENV['MAUTIC_DATA'] . '/cache',
+    'tmp_path'          => $_ENV['MAUTIC_DATA'] . '/tmp',
 ];
 
 if ( basename(__FILE__) === 'local.php' ) {
